@@ -1,24 +1,28 @@
-// mcp-client.service.ts
-
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MCPClientService {
-  private apiUrl = 'https://api.example.com/mcp'; // replace with your MCP API URL
+  private apiUrl = 'https://api.example.com/mcp'; // Base URL for MCP API
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
+  // Method to get data from the MCP API
   getData(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/data`);
+    return this.http.get(`${this.apiUrl}/data`, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    });
   }
 
-  postData(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/data`, data);
+  // Method to send data to the MCP API
+  sendData(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/data`, data, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    });
   }
 
-  // Add more MCP specific methods as needed
+  // Additional MCP methods can be added here
 }
